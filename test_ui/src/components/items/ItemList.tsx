@@ -32,10 +32,6 @@ const ItemList: React.FC<ItemListProps> = ({
     onFetchItems();
   }, []);
 
-  // const handleItemCreate = () => {
-  //   setShowAddForm(false);
-  //   onFetchItems();
-  // };
   const handleBackToList = () => {
     setSelectedItem(null);
     setShowAddForm(false);
