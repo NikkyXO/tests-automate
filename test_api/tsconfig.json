@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "lib": ["dom", "es6"],
+    "types": ["cypress", "node", "jest"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+  },
+  "include": [
+    "./cypress.config.ts",
+    "cypress/**/*.ts",
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "src/config/setup.ts",
+  ],
+  "exclude": ["node_modules"]
+//   "exclude": [
+//   "./cypress.config.ts",
+//   "node_modules",
+//   "cypress",
+//   "**/*.cy.tsx"
+// ]
+}
+
+
+
+
