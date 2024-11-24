@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Item, ItemCreateData } from '../types';
-import { fetchItems as apiFetchItems, createItem as apiCreateItem, updateItem as apiUpdateItem, deleteItem as apiDeleteItem } from '../services/api';
+import { fetchItems as apiFetchItems, createItem as apiCreateItem, updateItem as apiUpdateItem, deleteItem as apiDeleteItem, fetchSingleItem } from '../services/api';
 
 export const useItems = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -50,5 +50,15 @@ export const useItems = () => {
     }
   };
 
-  return { items, loading, error, fetchItems, createItem, updateItem, deleteItem };
+  const getItemById = async (id: string) => {
+    try {
+      return await fetchSingleItem(id);
+    } catch (err) {
+      setError(`Failed to fetch item error: ${err}`);
+      return null;
+    };
+
+  }
+
+  return { items, loading, error, fetchItems, createItem, updateItem, deleteItem, getItemById };
 };

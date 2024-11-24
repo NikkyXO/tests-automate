@@ -4,7 +4,11 @@ import { FormField } from "../../types";
 import { GenericForm } from "./CustomForm";
 
 
-export const ItemCreateForm: React.FC = () => {
+interface ItemCreateFormProps {
+  onSuccess?: () => void;
+}
+
+export const ItemCreateForm: React.FC<ItemCreateFormProps> = ({ onSuccess } ) => {
   const { createItem } = useItems();
 
   const createItemFields: FormField[] = [
@@ -17,7 +21,11 @@ export const ItemCreateForm: React.FC = () => {
       className="mt-10"
         fields={createItemFields}
         onSubmit={async (formData) => {
-          return await createItem({ name: formData.name, description: formData.description });
+          await createItem({ name: formData.name, description: formData.description });
+          if (onSuccess) {
+            onSuccess();
+          }
+          return true;
         }}
         submitButtonText="Create New Item"
         successMessage="Item created successfully!"

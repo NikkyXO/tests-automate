@@ -9,32 +9,22 @@ describe("Item Details Tests", () => {
   };
 
   beforeEach(() => {
-    cy.window().then((win) => {
-      win.localStorage.setItem("access_token", "mock-token");
+    cy.visit(`http://localhost:5173/items/${mockItem.id}`, {
+        onBeforeLoad(win) {
+          win.localStorage.setItem("access_token", "mock-token");
+        },
     });
-      cy.visit("http://localhost:5173/items");
 
-    cy.intercept("GET", "/items", {
-      statusCode: 200,
-      body: [mockItem],
-    }).as("fetchItems");
+    cy.intercept('GET', `/items/${mockItem.id}`, {
+        statusCode: 200,
+        body: mockItem,
+    }).as('getItemDetail');
 
-    cy.intercept(
-      {
-        method: "GET",
-        url: `/items/${mockItem.id}`,
-        headers: { Authorization: "Bearer mock-token" },
-      },
-      { statusCode: 201, body: { success: true } }
-    ).as("getItemDetail");
 
   });
 
   it("should load existing item into the page", () => {
-    cy.get(".animate-spin").should("be.visible");
-    cy.wait("@fetchItems");
-    cy.get(".animate-spin").should("not.exist");
-    cy.get("button").contains("View Item").click();
+    cy.wait("@getItemDetail");
 
     cy.get("p").contains(`Created by: ${mockItem.userId}`).should("be.visible");
     cy.get("p").contains(`Created At: ${mockItem.createdAt}`).should("be.visible");

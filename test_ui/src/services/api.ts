@@ -88,4 +88,14 @@ export const fetchItems = async () => {
     const response = await api.delete(`/items/${itemId}`, { headers });
     return response.data;
   };
+
+  export const fetchSingleItem = async (itemId: string) => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      throw new Error('no token found, please login first');
+    }
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await api.get(`/items/${itemId}`, { headers });
+    return response.data;
+  };
   

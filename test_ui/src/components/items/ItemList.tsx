@@ -1,6 +1,6 @@
 import { ItemCreateForm } from "../forms/ItemCreateForm";
 import { useEffect, useState } from "react";
-import { ItemDetail } from "./ItemDetail";
+import { useNavigate } from "react-router-dom";
 
 interface Item {
   id: string;
@@ -26,6 +26,7 @@ const ItemList: React.FC<ItemListProps> = ({
 }) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -36,6 +37,28 @@ const ItemList: React.FC<ItemListProps> = ({
     setSelectedItem(null);
     setShowAddForm(false);
   };
+
+  const handleViewItem = (item: Item) => {
+    navigate(`/items/${item.id}`);
+  };
+
+  useEffect(() => {
+    if (selectedItem) {
+      navigate(`/items/${selectedItem.id}`);
+    }
+  }, [selectedItem, navigate]);
+
+
+  const handleCreateSuccess = async () => {
+    try {
+      setShowAddForm(false);
+      onFetchItems();
+      navigate('/items');
+    } catch (error) {
+      console.error('Error refreshing items:', error);
+    }
+  };
+
 
   if (loading) {
     return (
@@ -85,10 +108,8 @@ const ItemList: React.FC<ItemListProps> = ({
       {/* Main Content */}
       <div className="bg-white w-full rounded-lg shadow-md p-6">
         {showAddForm ? (
-          <ItemCreateForm />
-        ) : selectedItem ? (
-          <ItemDetail item={selectedItem} />
-        ) : (
+          <ItemCreateForm onSuccess={handleCreateSuccess} />
+        )  : (
           <div>
             {items.length > 0 ? (
               <ul className="divide-y divide-gray-200">
@@ -103,7 +124,8 @@ const ItemList: React.FC<ItemListProps> = ({
                       </div>
                       <div>
                         <button
-                          onClick={() => setSelectedItem(item)}
+                          // onClick={() => setSelectedItem(item)}
+                          onClick={() => handleViewItem(item)}
                           className="ml-4 bg-gray-300 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 rounded"
                         >
                           View Item
@@ -123,61 +145,6 @@ const ItemList: React.FC<ItemListProps> = ({
       </div>
     </div>
 
-    // <div>
-    //   <div>
-    //     <button
-    //     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setAddItem(true)}>Add Items</button>
-
-    //   </div>
-    //   {addItem ? (
-    //     <ItemCreateForm
-    //     />
-    //   ): (
-    //     {items.length > 0 ? (
-    //       selectedItem ? (
-    //         <ItemDetail item={selectedItem} />
-    //       ) : (
-    //         <ul>
-    //           {items.map((item) => (
-    //             <li key={item.id}>
-    //               {item.name}
-    //               {item.description}
-    //               <button onClick={() => setSelectedItem(item)}>View</button>
-    //             </li>
-    //           ))}
-    //         </ul>
-    //       )
-    //     ) : (
-    //       <p>No items available</p>
-    //     )}
-    //   )}
-    //     <ItemCreateForm />
-
-    //   {loading && <div>Loading...</div>}
-    //   {error && (
-    //     <div>
-    //       Error: {typeof error === "string" ? error : "An error occurred"}
-    //     </div>
-    //   )}
-
-    //   {items.length > 0 ? (
-    //     selectedItem ? (
-    //       <ItemDetail item={selectedItem} />
-    //     ) : (
-    //       <ul>
-    //         {items.map((item) => (
-    //           <li key={item.id}>
-    //             {item.name}
-    //             {item.description}
-    //             <button onClick={() => setSelectedItem(item)}>View</button>
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     )
-    //   ) : (
-    //     <p>No items available</p>
-    //   )}
-    // </div>
   );
 };
 

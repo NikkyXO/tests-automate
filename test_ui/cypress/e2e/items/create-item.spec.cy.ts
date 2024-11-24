@@ -3,7 +3,7 @@ describe('Create Item Form', () => {
     beforeEach(() => {
         cy.visit('http://localhost:5173/items', {
             onBeforeLoad(win) {
-                win.localStorage.setItem('access_token', 'mock-token'); // Simulate storing the token
+                win.localStorage.setItem('access_token', 'mock-token');
             },
         });
 
@@ -38,7 +38,7 @@ describe('Create Item Form', () => {
         cy.get('input[placeholder="description"]').type('New Description');
         cy.get('button').contains('Create New Item').click();
         cy.wait('@createItem');
-        cy.contains('Item created successfully').should('be.visible');
+        cy.url().should('include', '/items');
       });
 
 })

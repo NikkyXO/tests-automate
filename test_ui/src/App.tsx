@@ -7,6 +7,7 @@ import { Dashboard } from "./pages/DashBoard";
 import { ViewItems } from "./pages/ViewItems";
 import { AddItem } from "./pages/CreateItem";
 import { RegisterPage } from "./pages/RegisterPage";
+import { ViewItem } from "./pages/ItemDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/items" element={<ViewItems />} />
           <Route path="/add-item" element={<AddItem />} />
+          <Route path="/items/:id" element={<ViewItem />} />
           {/* Catch-all route for 404 - must be last */}
           <Route path="*" element={<NotFound />} />
         </Routes>

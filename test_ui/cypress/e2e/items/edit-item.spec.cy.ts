@@ -1,4 +1,3 @@
-
 describe("Edit Item Form Tests", () => {
   const mockItem = {
     id: "82fe4f8d-c2ad-4f0d-bffa-4fdb55b41d23",
@@ -10,16 +9,22 @@ describe("Edit Item Form Tests", () => {
   };
 
   beforeEach(() => {
-    cy.visit("http://localhost:5173/items", {
+    cy.visit(`http://localhost:5173/items/${mockItem.id}`, {
       onBeforeLoad(win) {
         win.localStorage.setItem("access_token", "mock-token");
       },
     });
 
-    cy.intercept("GET", "/items", {
-      statusCode: 200,
-      body: [mockItem],
-    }).as("fetchItems");
+    cy.intercept('GET', `/items/${mockItem.id}`, {
+        statusCode: 200,
+        body: mockItem,
+    }).as('getItemDetail');
+
+    cy.intercept('GET', '/items', {
+        statusCode: 200,
+        body: [{ id: 1, name: 'Item 1', description: 'Description 1' }],
+    }).as('fetchItems');
+
 
     cy.intercept(
       {
@@ -30,22 +35,17 @@ describe("Edit Item Form Tests", () => {
       { statusCode: 201, body: { success: true } }
     ).as("editItem");
   });
+  
+
   it("should load existing item into the form", () => {
-    cy.get('.animate-spin').should('be.visible');
-    cy.wait("@fetchItems");
-    cy.get('.animate-spin').should('not.exist');
-    cy.get("button").contains("View Item").click();
+    cy.wait("@getItemDetail");
     cy.get("button").contains("Edit").click();
 
-    cy.get('input[placeholder="name"]').should('be.empty');
-        cy.get('input[placeholder="description"]').should('be.empty');
+    cy.get('input[placeholder="name"]').should("be.empty");
+    cy.get('input[placeholder="description"]').should("be.empty");
   });
 
   it("should update the item successfully", () => {
-    cy.get('.animate-spin').should('be.visible');
-    cy.wait("@fetchItems");
-    cy.get('.animate-spin').should('not.exist');
-    cy.get("button").contains("View Item").click();
     cy.get("button").contains("Edit").click();
 
     cy.get('input[placeholder="description"]')
@@ -56,6 +56,7 @@ describe("Edit Item Form Tests", () => {
     cy.get("button").contains("Update Item").click();
 
     cy.wait("@editItem");
+    cy.wait("@fetchItems");
     cy.contains("Update Successful!").should("be.visible");
   });
 });

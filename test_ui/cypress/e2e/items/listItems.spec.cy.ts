@@ -31,7 +31,6 @@ describe("List All Items Tests", () => {
     });
 
     it("should load existing items into page", () => {
-      cy.get(".animate-spin").should("be.visible");
       cy.wait("@fetchItems");
       cy.get(".animate-spin").should("not.exist");
     });

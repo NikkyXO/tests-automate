@@ -10,7 +10,7 @@ export const ItemDetail: React.FC<{ item: Item }> = ({ item }) => {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
-  const { deleteItem, fetchItems } = useItems();
+  const { deleteItem } = useItems();
   const handleDelete = async (id: string) => {
     try {
       setLoading(true);
@@ -19,8 +19,7 @@ export const ItemDetail: React.FC<{ item: Item }> = ({ item }) => {
       const success = await deleteItem(id);
       if (success) {
         setSuccessMessage("Item deleted successfully!");
-        await fetchItems();
-        navigate(0);
+        navigate('/items');
       }
     } catch (error) {
       console.log(error);
