@@ -42,7 +42,6 @@ npm run test
 npm run test:e2e
 ```
 4. Run Cypress tests
-<br/>
  
  **Note: Stop any running instances of cypress before switching environments**
 
@@ -60,7 +59,6 @@ npm install
 ```
 
 2. Run Cypress tests
-<br/>
 
  **Note: Stop any running instances of cypress before switching environments**
 ```bash
