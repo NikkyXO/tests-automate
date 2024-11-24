@@ -6,8 +6,8 @@
 
 ### Backend Setup
 
- - Clone the repository
- - Navigate to backend directory -i.e /test_api
+ 1. Clone the repository
+ 2. Navigate to backend directory
 
 ```bash
 $ cd test_api
@@ -16,29 +16,33 @@ $ npm run start:dev
 ```
 ### Frontend Setup 
 
- - Navigate to frontend directory -i.e /test_ui
+ 1. Navigate to frontend directory
 
 ```bash
 cd test_ui
 npm install
-npm start
+npm run dev
 ```
 
 ### Running Tests
 
 
-### Backend Tests
+#### Backend Tests
+1. Navigate to the backend directory
 ```bash
 cd test_api
 npm install
+```
+2. Run Jest test
+```bash
 npm run test
 ```
-  - To run jest tests
+3. Run End-to-End (E2E) tests
 ```bash
 npm run test:e2e
 ```
-
-- To run Cypress tests
+4. Run Cypress tests
+ **Note: Stop any running instances of cypress before switching environments**
 ```bash
 npm run test:cypress
 ```
@@ -46,15 +50,16 @@ npm run test:cypress
 
 
 ### Frontend Tests
+1. Navigate to the Frontend directory
 ```bash
 cd test_ui
 npm install
- ```
+```
 
- - To run Cypress tests
+2. Run Cypress tests
+ **Note: Stop any running instances of cypress before switching environments**
 ```bash
-npm run dev or
-npm run dev -- --host  ['to expose port to cypress']
-npx cypress open
+npm run dev | npm run dev -- --host  ['to expose port to cypress']
+npm run cypress | npx cypress open
 ```
 

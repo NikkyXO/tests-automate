@@ -10,5 +10,6 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "types": ["cypress"],
   }
 }
