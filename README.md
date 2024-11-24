@@ -25,29 +25,36 @@ npm start
 ```
 
 ### Running Tests
+
+
 ### Backend Tests
-  - Running jest tests
 ```bash
 cd test_api
+npm install
 npm run test
+```
+  - To run jest tests
+```bash
 npm run test:e2e
 ```
 
-- Running Cypress tests
+- To run Cypress tests
 ```bash
-cd test_api
-npm run test:e2e:cypress
+npm run test:cypress
 ```
-or 
-```bash
- npx cypress open
-```
+
 
 
 ### Frontend Tests
 ```bash
 cd test_ui
-npm run dev -- --host  ['to expose port to cypress']
- npx cypress open
+npm install
  ```
+
+ - To run Cypress tests
+```bash
+npm run dev or
+npm run dev -- --host  ['to expose port to cypress']
+npx cypress open
+```
 

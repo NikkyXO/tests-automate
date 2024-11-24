@@ -1,27 +1,28 @@
-describe('Authentication API Tests', () => {
-  const baseUrl = Cypress.env('baseUrl') || 'https://qa-test-9di7.onrender.com';
+import { v4 as uuidv4 } from 'uuid';
 
-  beforeEach(() => {
-    cy.request('POST', `${baseUrl}/auth/reset-database`, {});
-  });
+describe('Authentication API Tests', () => {
+  const baseUrl = Cypress.env('baseUrl');
+  const uniqueUsername = `User-${uuidv4()}`;
+  const testPassword = 'TestPassword123!';
+
   it('should register a new user', () => {
-    cy.request('POST', `${baseUrl}/auth/register`, {
-      email: 'testuser@example.com',
-      password: 'TestPassword123!',
+    cy.request('POST', `${baseUrl}/auth/signup`, {
+      username: uniqueUsername,
+      password: testPassword,
     }).then((response) => {
       expect(response.status).to.eq(201);
-      expect(response.body).to.have.property('accessToken');
-      expect(response.body).to.have.property('user');
+      expect(response.body).to.have.property('username');
     });
   });
 
   it('should log in with valid credentials', () => {
     cy.request('POST', `${baseUrl}/auth/login`, {
-      email: 'testuser@example.com',
-      password: 'TestPassword123!',
+      username: uniqueUsername,
+      password: testPassword,
     }).then((response) => {
-      expect(response.status).to.eq(200);
+      expect(response.status).to.eq(201);
       expect(response.body).to.have.property('accessToken');
+      expect(response.body).to.have.property('user');
     });
   });
 
@@ -30,8 +31,8 @@ describe('Authentication API Tests', () => {
       method: 'POST',
       url: `${baseUrl}/auth/login`,
       body: {
-        email: 'wronguser@example.com',
-        password: 'TestPassword123!',
+        username: 'wrongUsername',
+        password: testPassword,
       },
       failOnStatusCode: false,
     }).then((response) => {
@@ -45,7 +46,7 @@ describe('Authentication API Tests', () => {
       method: 'POST',
       url: `${baseUrl}/auth/login`,
       body: {
-        email: 'testuser@example.com',
+        username: uniqueUsername,
         password: 'WrongPassword123!',
       },
       failOnStatusCode: false,
