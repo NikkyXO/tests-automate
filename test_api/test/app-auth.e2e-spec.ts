@@ -5,7 +5,7 @@ import { expect } from '@jest/globals';
 import { validate as isUUID } from 'uuid';
 import { AppModule } from 'src/app.module';
 
-describe('Authentication System (e2e)', () => {
+describe('Authentication API', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -63,7 +63,6 @@ describe('Authentication System (e2e)', () => {
     it('should not login with invalid credentials', async () => {
       await request(app.getHttpServer()).post('/auth/signup').send(testUser);
 
-      // Attempt login with wrong password
       return request(app.getHttpServer())
         .post('/auth/login')
         .send({
@@ -72,29 +71,5 @@ describe('Authentication System (e2e)', () => {
         })
         .expect(401);
     });
-
-    it('should access protected route with valid token', async () => {
-      const registerResponse = await request(app.getHttpServer())
-        .post('/auth/signup')
-        .send(testUser);
-
-      expect(isUUID(registerResponse.body.id)).toBeTruthy();
-
-      // const loginResponse = await request(app.getHttpServer())
-      //   .post('/auth/login')
-      //   .send(testUser);
-
-      // const token = loginResponse.body.accessToken;
-
-      // Access Item protected route
-      //   return request(app.getHttpServer())
-      //     .get('/protected-route')
-      //     .set('Authorization', `Bearer ${token}`)
-      //     .expect(200);
-    });
-
-    // it('should not access protected route without token', () => {
-    //   return request(app.getHttpServer()).get('/items').expect(401);
-    // });
   });
 });

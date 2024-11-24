@@ -91,8 +91,6 @@ describe('Login Form Tests', () => {
           cy.get('button').contains('Login').click();
 
           cy.contains('Operation failed').should('be.visible');
-    
-          // cy.contains('Failed. Please try again').should('be.visible');
         });
       })
 

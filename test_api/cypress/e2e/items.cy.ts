@@ -47,7 +47,6 @@ describe('Items API Tests', () => {
       expect(response.status).to.eq(201);
       expect(response.body).to.have.property('name', itemName);
       expect(response.body).to.have.property('description', description);
-      // expect(response.body).to.have.property('user');
 
       itemId = response.body.id;
       cy.log('itemId..', itemId);
