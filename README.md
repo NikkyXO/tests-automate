@@ -42,7 +42,10 @@ npm run test
 npm run test:e2e
 ```
 4. Run Cypress tests
+<br/>
+ 
  **Note: Stop any running instances of cypress before switching environments**
+
 ```bash
 npm run test:cypress
 ```
@@ -57,6 +60,8 @@ npm install
 ```
 
 2. Run Cypress tests
+<br/>
+
  **Note: Stop any running instances of cypress before switching environments**
 ```bash
 npm run dev | npm run dev -- --host  ['to expose port to cypress']
