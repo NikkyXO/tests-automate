@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           await registerUser({username: username, password: password});
           return true;
         } catch (error) {
-          setError('Registration faile d');
+          setError('Registration failed');
           console.error('Registration', error);
           return false;
         }

@@ -7,9 +7,9 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["cypress"],
-  }
+    "types": ["cypress", "node", "jest"],
+  },
 }
